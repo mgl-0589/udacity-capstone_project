@@ -68,6 +68,11 @@ In this step the main idea is to configure a set of attributes (in this case imm
 
 That's the reason why Data Engineering and Data Science teams select the Immigration data and LA temperature data to create the dimensional tables and LA Crimes data to create the fact table.
 
+The reason the Data Engineering team selects a _star schema_ model relies on its benefits (simpler and faster queries compared with _snowflake schema_). 
+
+One of the advantages of using Apache Spark is that this technology offers solutions to data access and integration to machine learning and visualization using Python (or other popular languages); besides, it also includes a library of machine-learning algorithms (MLlib).
+With a fact table working as a point of integration the Data Science team is able to apply these tools to analyze the data as a single unit.
+
 
 **Dimension tables**:
 
@@ -215,6 +220,14 @@ This project uses Apache Spark because it is a technology built and optimized fo
 
 Considering this project is not intended to show data in real-time, and Immigration/Crime data sources were built on a monthly basis, the Data Engineering team decided that data will be refreshed by month.
 
+If the Data Science team realizes the analysis shows interesting insights the next step would be replicating the process for other cities. In this case, the Data Engineering team should consider a few scenarios
+
+- The data will increase because the Data Science team needs temperature and crime databases from other cities.
+- Assuming there is new data available every day, the Data Science team needs to refresh data early in the morning.
+- The Data Science team shows the results through a dashboard, this dashboard could be consulted by any person that finds the information relevant. 
+
+For these scenarios the Data Engineering team propose:
+
 #### The data was increased by 100x.
 
 There are many big data frameworks that could handle huge amounts of data; selecting one will depend on many factors.
@@ -229,7 +242,8 @@ For this particular project implementing Apache Airflow could handle tasks sched
 
 #### The database needed to be accessed by 100+ people.
 
-Data warehouse in cloud is one of the best options for accessing databases simultaneously by a lot of people. Technologies like Redshift, BigQuery, Teradata, Aster, Oracle ExaData or Azure, paralellize the execution of one query on multiple CPU/machines.
+A data warehouse in the cloud is one of the best options for accessing databases simultaneously by a lot of people. Technologies like Redshift, BigQuery, Teradata, Aster, Oracle ExaData or Azure, parallelize the execution of one query on multiple CPU/machines.
+For instance, Redshift has the ability to automatically adds additional cluster capacity when it is increased the numbers of queries to read data; this technology combined with Amason S3 storage, with its technology of distributed workloads, allows working easily in high concurrency workloads scenarios.
 
 
 ## References
@@ -239,5 +253,11 @@ Data warehouse in cloud is one of the best options for accessing databases simul
 [cast string into date type](https://sparkbyexamples.com/spark/spark-convert-timestamp-to-date/#:~:text=Spark%20to_date()%20%E2%80%93%20Convert%20timestamp%20to%20date&text=Spark%20Timestamp%20consists%20of%20value,date%20on%20Spark%20DataFrame%20column.)
 
 [filter or include based on list](https://stackoverflow.com/questions/40421845/pyspark-dataframe-filter-or-include-based-on-list)
+
+[high concurrency](https://docs.aws.amazon.com/redshift/latest/dg/concurrency-scaling.html)
+[high concurrency](https://aws.amazon.com/blogs/big-data/optimizing-amazon-s3-for-high-concurrency-in-distributed-workloads/)
+
+[Advantages of Spark](https://www.ibmbigdatahub.com/blog/who-uses-spark-and-why)
+[Star Schema](https://www.xplenty.com/blog/snowflake-schemas-vs-star-schemas-what-are-they-and-how-are-they-different/)
 
 Udacity nanodegree program
